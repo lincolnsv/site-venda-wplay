@@ -1,97 +1,114 @@
 
-<!-- Código HTML atualizado -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WPlay IPTV - A Melhor TV por Internet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #0a0a1a;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    .futuristic-font { font-family: 'Orbitron', sans-serif; }
+    .glow-text { text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); }
 
-<!-- Menu Lateral para Conteúdo Recente -->
-<style>
-  .side-tab {
-    position: fixed;
-    top: 100px;
-    right: 0;
-    width: 300px;
-    max-height: 90vh;
-    overflow-y: auto;
-    background: rgba(15, 15, 30, 0.95);
-    border-left: 2px solid #00ffff;
-    padding: 20px;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-    transform: translateX(100%);
-  }
+    .side-tab {
+      position: fixed;
+      top: 120px;
+      right: 0;
+      width: 300px;
+      max-height: 85vh;
+      overflow-y: auto;
+      background: rgba(15, 15, 30, 0.95);
+      border-left: 2px solid #00ffff;
+      padding: 20px;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      transform: translateX(100%);
+    }
+    .side-tab.open { transform: translateX(0); }
 
-  .side-tab.open {
-    transform: translateX(0);
-  }
+    .side-tab-toggle {
+      position: fixed;
+      top: 120px;
+      right: 0;
+      background: #00ffff;
+      color: #000;
+      padding: 10px 15px;
+      cursor: pointer;
+      z-index: 1001;
+      border-radius: 8px 0 0 8px;
+      font-weight: bold;
+    }
+    .side-tab h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: #ff00ff;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .side-tab .content-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .side-tab .content-item {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 8px;
+      border-left: 3px solid #00ffff;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,0.05);
+      border-left: 4px solid #00ffff;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
 
-  .side-tab-toggle {
-    position: fixed;
-    top: 100px;
-    right: 0;
-    background: #00ffff;
-    color: #000;
-    padding: 10px 15px;
-    cursor: pointer;
-    z-index: 1001;
-    border-radius: 8px 0 0 8px;
-    font-weight: bold;
-  }
-
-  .side-tab h3 {
-    font-family: 'Orbitron', sans-serif;
-    color: #ff00ff;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  .side-tab .content-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .side-tab .content-item {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 8px;
-    border-left: 3px solid #00ffff;
-    border-radius: 4px;
-    font-size: 0.9rem;
-  }
-</style>
-
-<div class="side-tab-toggle" onclick="document.querySelector('.side-tab').classList.toggle('open')">
-  + Conteúdo Novo
-</div>
-
-<div class="side-tab">
-  <h3>Filmes/Séries Recentemente Adicionados</h3>
-  <div class="content-grid">
-    <div class="content-item">As Tartarugas Ninja Fora das Sombras (2016)</div>
-    <div class="content-item">Baywatch SOS Malibu (2017)</div>
-    <div class="content-item">Click (2006)</div>
-    <div class="content-item">Crepúsculo (2008)</div>
-    <div class="content-item">Mafia Mamma (2023)</div>
-    <div class="content-item">Megiddo (2001)</div>
-    <div class="content-item">O Homem do Saco (2024)</div>
-    <div class="content-item">Vale Tudo (2025)</div>
-    <div class="content-item">The Chosen (2024)</div>
-    <div class="content-item">Senora Acero (2014)</div>
+  <!-- Botão do menu lateral -->
+  <div class="side-tab-toggle" onclick="document.querySelector('.side-tab').classList.toggle('open')">
+    + Conteúdo Novo
   </div>
-</div>
 
-<!-- Depoimento ajustado -->
-<!-- ... outras seções ... -->
-<div class="testimonial-card">
-  <div class="flex items-center mb-4">
-    <div class="text-yellow-400 mr-2">
-      <i class="fas fa-star"></i>
-      <i class="fas fa-star"></i>
-      <i class="fas fa-star"></i>
-      <i class="fas fa-star"></i>
-      <i class="fas fa-star"></i>
+  <!-- Menu lateral com conteúdo novo -->
+  <div class="side-tab">
+    <h3>Filmes/Séries Recentemente Adicionados</h3>
+    <div class="content-grid">
+      <div class="content-item">As Tartarugas Ninja Fora das Sombras (2016)</div>
+      <div class="content-item">Baywatch SOS Malibu (2017)</div>
+      <div class="content-item">Click (2006)</div>
+      <div class="content-item">Crepúsculo (2008)</div>
+      <div class="content-item">Mafia Mamma (2023)</div>
+      <div class="content-item">Megiddo (2001)</div>
+      <div class="content-item">O Homem do Saco (2024)</div>
+      <div class="content-item">Vale Tudo (2025)</div>
+      <div class="content-item">The Chosen (2024)</div>
+      <div class="content-item">Senora Acero (2014)</div>
     </div>
   </div>
-  <p class="mb-4 italic">"Sou fazendeiro em Goiás e aqui o sinal é difícil, mas a WPlay funciona perfeitamente mesmo na região rural. Melhor investimento que fiz!"</p>
-  <div class="font-bold text-orange-400">- João P., Goiás</div>
-</div>
 
-<!-- Continue com o restante do HTML normalmente -->
+  <!-- Depoimento ajustado -->
+  <section class="py-12 px-6 max-w-4xl mx-auto">
+    <h2 class="futuristic-font text-3xl text-center mb-6 text-cyan-400 glow-text">Depoimentos</h2>
+    <div class="testimonial-card">
+      <div class="flex items-center mb-3 text-yellow-400">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+      <p class="mb-4 italic">"Sou fazendeiro em Goiás e aqui o sinal é difícil, mas a WPlay funciona perfeitamente mesmo na região rural. Melhor investimento que fiz!"</p>
+      <div class="font-bold text-orange-400">- João P., Goiás</div>
+    </div>
+  </section>
+
+</body>
+</html>

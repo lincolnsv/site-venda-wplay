@@ -1,129 +1,1327 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WPlay IPTV - A Melhor TV por Internet</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #0a0a1a;
-      color: #e0e0e0;
-      overflow-x: hidden;
-    }
-    .futuristic-font { font-family: 'Orbitron', sans-serif; }
-    .glow-text { text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); }
-    .testimonial-card {
-      background: rgba(255,255,255,0.05);
-      border-left: 4px solid #00ffff;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 8px;
-    }
-    .side-tab {
-      position: fixed;
-      top: 120px;
-      right: 0;
-      width: 300px;
-      max-height: 85vh;
-      overflow-y: auto;
-      background: rgba(15, 15, 30, 0.95);
-      border-left: 2px solid #00ffff;
-      padding: 20px;
-      z-index: 1000;
-      transition: transform 0.3s ease;
-      transform: translateX(100%);
-    }
-    .side-tab.open { transform: translateX(0); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WPlay IPTV - A Melhor TV por Internet do Brasil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0a0a1a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        .futuristic-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+        }
+        
+        .glow-box {
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f0f2e 0%, #1a1a4a 50%, #0f0f2e 100%);
+        }
+        
+        .neon-border {
+            border: 1px solid #00ffff;
+            position: relative;
+        }
+        
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid #ff00ff;
+            z-index: -1;
+            border-radius: inherit;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 255, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 255, 0);
+            }
+        }
+        
+        .channel-icon {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .channel-icon:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8));
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="1" height="1" fill="rgba(0,255,255,0.05)"/></svg>');
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: #0f0f2e;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #00ffff;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-btn:hover {
+            color: #00ffff;
+        }
+        
+        .category-title {
+            color: #00ffff;
+            border-bottom: 1px solid #00ffff;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .channel-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .channel-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            border-left: 3px solid #00ffff;
+            transition: all 0.3s ease;
+        }
+        
+        .channel-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .movie-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ff00ff;
+        }
+        
+        .movie-title {
+            color: #ff00ff;
+            font-weight: bold;
+        }
+        
+        .device-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #00ffff;
+            transition: all 0.3s ease;
+        }
+        
+        .device-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .info-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ff00ff;
+            margin-bottom: 30px;
+        }
+        
+        .urgency-banner {
+            background: linear-gradient(90deg, #ff0000, #ff4500);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            animation: urgency-pulse 2s infinite;
+        }
+        
+        @keyframes urgency-pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            border-left: 4px solid #00ffff;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1));
+            border: 1px solid #00ffff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .new-content-section {
+            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(0,255,255,0.1));
+            border: 1px solid #ff00ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .new-content-title {
+            color: #ff00ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        
+        .content-item {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 5px;
+            border-left: 3px solid #00ffff;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .content-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .content-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .content-tab {
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .content-tab.active {
+            border-bottom: 2px solid #ff00ff;
+            color: #ff00ff;
+        }
+        
+        .content-tab:hover {
+            color: #00ffff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .content-container {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .content-sidebar {
+            width: 250px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 3px solid #00ffff;
+        }
+        
+        .content-main {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            .content-sidebar {
+                width: 100%;
+            }
+        }
+        
+        /* Flash promotion styles */
+        .flash-promotion {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ff0000, #ff4500);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 9999;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+            text-align: center;
+            animation: flashPromotion 2s infinite;
+            display: none;
+        }
+        
+        @keyframes flashPromotion {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        .flash-promotion h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .flash-promotion .countdown {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .flash-promotion .close-flash {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
 
-    .side-tab-toggle {
-      position: fixed;
-      top: 120px;
-      right: 0;
-      background: #00ffff;
-      color: #000;
-      padding: 10px 15px;
-      cursor: pointer;
-      z-index: 1001;
-      border-radius: 8px 0 0 8px;
-      font-weight: bold;
-    }
-
-    .side-tab h3 {
-      font-family: 'Orbitron', sans-serif;
-      color: #ff00ff;
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    .side-tab .content-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .side-tab .content-item {
-      background: rgba(0, 0, 0, 0.4);
-      padding: 8px;
-      border-left: 3px solid #00ffff;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
-  </style>
+        /* Netflix-style background carousel */
+        .background-carousel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .carousel-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .carousel-item.active {
+            opacity: 0.3;
+        }
+        
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Botão do menu lateral -->
-  <div class="side-tab-toggle" onclick="document.querySelector('.side-tab').classList.toggle('open')">
-    + Conteúdo Novo
-  </div>
-
-  <!-- Menu lateral com conteúdo novo -->
-  <div class="side-tab">
-    <h3>Filmes/Séries Recentemente Adicionados</h3>
-    <div class="content-grid">
-      <div class="content-item">As Tartarugas Ninja Fora das Sombras (2016)</div>
-      <div class="content-item">Baywatch SOS Malibu (2017)</div>
-      <div class="content-item">Click (2006)</div>
-      <div class="content-item">Crepúsculo (2008)</div>
-      <div class="content-item">Mafia Mamma (2023)</div>
-      <div class="content-item">Megiddo (2001)</div>
-      <div class="content-item">O Homem do Saco (2024)</div>
-      <div class="content-item">Vale Tudo (2025)</div>
-      <div class="content-item">The Chosen (2024)</div>
-      <div class="content-item">Senora Acero (2014)</div>
+    <!-- Netflix-style Background Carousel -->
+    <div class="background-carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('https://image.tmdb.org/t/p/original/9yBVqNruk6Ykrwc32qrK2TIE5xw.jpg');"></div>
+            <div class="carousel-item" style="background-image: url('https://image.tmdb.org/t/p/original/8Vt6mWRCeAcqQHIIp8Seb00qU3P.jpg');"></div>
+            <div class="carousel-item" style="background-image: url('https://image.tmdb.org/t/p/original/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg');"></div>
+            <div class="carousel-item" style="background-image: url('https://image.tmdb.org/t/p/original/9dKCd55IuTT5QRs989m9Qlb7d2B.jpg');"></div>
+            <div class="carousel-item" style="background-image: url('https://image.tmdb.org/t/p/original/8YFL5QQVPy3AgrEQxNYVSgiPEbe.jpg');"></div>
+            <div class="carousel-item" style="background-image: url('https://image.tmdb.org/t/p/original/8Vt6mWRCeAcqQHIIp8Seb00qU3P.jpg');"></div>
+        </div>
+        <div class="carousel-overlay"></div>
     </div>
-  </div>
+    
+    <div class="matrix-bg"></div>
 
-  <!-- Cabeçalho -->
-  <header class="py-6 text-center">
-    <h1 class="text-4xl futuristic-font text-cyan-400 glow-text font-bold">WPlay IPTV</h1>
-    <p class="text-gray-400">A melhor TV por internet do Brasil. Canais, filmes e séries ilimitados!</p>
-  </header>
-
-  <!-- Depoimentos -->
-  <section class="py-12 px-6 max-w-4xl mx-auto">
-    <h2 class="futuristic-font text-3xl text-center mb-6 text-cyan-400 glow-text">Depoimentos</h2>
-    <div class="testimonial-card">
-      <div class="flex items-center mb-3 text-yellow-400">
-        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-      </div>
-      <p class="mb-4 italic">"Sou fazendeiro em Goiás e aqui o sinal é difícil, mas a WPlay funciona perfeitamente mesmo na região rural. Melhor investimento que fiz!"</p>
-      <div class="font-bold text-orange-400">- João P., Goiás</div>
+    <!-- Flash Promotion Popup -->
+    <div class="flash-promotion">
+        <span class="close-flash">&times;</span>
+        <h3>PROMOÇÃO RELÂMPAGO!</h3>
+        <p>50% DE DESCONTO POR TEMPO LIMITADO</p>
+        <div class="countdown" id="flashCountdown">20:00</div>
+        <p>Corra, essa promoção vai acabar em breve!</p>
+        <a href="#planos" class="bg-white text-red-600 font-bold py-2 px-6 rounded-full inline-block mt-3 hover:bg-gray-100 transition duration-300">
+            QUERO MEU DESCONTO!
+        </a>
     </div>
-  </section>
 
-  <script>
-    // Toggle side tab
-    document.querySelector('.side-tab-toggle').addEventListener('click', () => {
-      document.querySelector('.side-tab').classList.toggle('open');
-    });
-  </script>
+    <!-- Urgency Banner -->
+    <div class="urgency-banner">
+        ⚡ PROMOÇÃO RELÂMPAGO! 50% DE DESCONTO PARA OS PRÓXIMOS 20 CLIENTES! ⚡
+    </div>
 
-</body>
+    <!-- Header -->
+    <header class="gradient-bg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-satellite-dish text-3xl text-cyan-400"></i>
+                <h1 class="futuristic-font text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+                    WPlay <span class="glow-text">IPTV</span>
+                </h1>
+            </div>
+            
+            <div class="hidden md:flex space-x-6">
+                <a href="#planos" class="text-gray-300 hover:text-cyan-400 transition duration-300 futuristic-font">Planos</a>
+                <a href="#canais" class="text-gray-300 hover:text-cyan-400 transition duration-300 futuristic-font">Canais</a>
+                <a href="#novidades" class="text-gray-300 hover:text-cyan-400 transition duration-300 futuristic-font">Novidades</a>
+                <a href="#dispositivos" class="text-gray-300 hover:text-cyan-400 transition duration-300 futuristic-font">Dispositivos</a>
+                <a href="#contato" class="text-gray-300 hover:text-cyan-400 transition duration-300 futuristic-font">Suporte</a>
+            </div>
+            
+            <button class="md:hidden text-cyan-400 text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="container mx-auto px-4 py-20 md:py-32 relative z-10 text-center">
+            <h2 class="futuristic-font text-4xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 glow-text">
+                TV DIGITAL QUE VOCÊ MERECE
+            </h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Assista a <span class="text-cyan-400 font-bold">10.000+ canais</span> e <span class="text-purple-400 font-bold">50.000+ filmes/séries</span> em qualidade Full HD/4K por menos de R$1 por dia!
+            </p>
+            
+            <div class="highlight-box max-w-2xl mx-auto mb-8">
+                <div class="flex items-center justify-center space-x-4">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-cyan-400">10.000+</div>
+                        <div class="text-sm">CANAIS</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-purple-400">50.000+</div>
+                        <div class="text-sm">FILMES/SÉRIES</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-green-400">24/7</div>
+                        <div class="text-sm">SUPORTE</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#planos" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-4 px-10 rounded-full transition duration-300 transform hover:scale-105 glow-box text-xl">
+                    <i class="fas fa-bolt mr-2"></i> ASSINAR AGORA
+                </a>
+                <a href="https://wa.me/5564999984690" class="border-2 border-green-500 bg-green-900 bg-opacity-30 text-green-400 hover:bg-green-500 hover:text-white font-bold py-4 px-10 rounded-full transition duration-300 transform hover:scale-105 text-xl">
+                    <i class="fab fa-whatsapp mr-2"></i> TIRAR DÚVIDAS
+                </a>
+            </div>
+            
+            <div class="mt-8 flex items-center justify-center space-x-4">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                    <span>Sem fidelidade</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                    <span>Instalação em 5 minutos</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                    <span>Teste grátis disponível</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent z-10"></div>
+    </section>
+
+    <!-- O que é IPTV Section -->
+    <section class="py-16 bg-black bg-opacity-70">
+        <div class="container mx-auto px-4">
+            <div class="info-box">
+                <h2 class="futuristic-font text-3xl md:text-4xl font-bold mb-6 text-cyan-400 glow-text">
+                    POR QUE <span class="text-purple-400">ESCOLHER</span> NOSSO IPTV?
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4 flex items-center">
+                            <i class="fas fa-trophy mr-3"></i> A MELHOR EXPERIÊNCIA
+                        </h3>
+                        <p class="mb-4">
+                            Nossa tecnologia exclusiva garante a melhor qualidade de streaming com ZERO buffering, mesmo durante os jogos mais importantes.
+                        </p>
+                        <p>
+                            Servidores premium com redundância garantem 99,9% de uptime - você nunca perde seu programa favorito.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-purple-400 mb-4 flex items-center">
+                            <i class="fas fa-money-bill-wave mr-3"></i> ECONOMIA EXTREMA
+                        </h3>
+                        <p class="mb-4">
+                            Pague até <span class="font-bold text-green-400">70% menos</span> que as operadoras tradicionais e tenha acesso a MUITO mais conteúdo.
+                        </p>
+                        <p>
+                            Sem taxas extras, sem fidelidade, sem surpresas na fatura. Assinatura simples e transparente.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-gray-900 p-4 rounded-lg border-l-4 border-cyan-400">
+                        <div class="text-cyan-400 text-2xl mb-2">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">ATIVAÇÃO IMEDIATA</h4>
+                        <p class="text-sm">Seu acesso é liberado em menos de 5 minutos após a confirmação do pagamento.</p>
+                    </div>
+                    <div class="bg-gray-900 p-4 rounded-lg border-l-4 border-purple-400">
+                        <div class="text-purple-400 text-2xl mb-2">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">SUPORTE 24/7</h4>
+                        <p class="text-sm">Equipe especializada disponível a qualquer hora para resolver seus problemas.</p>
+                    </div>
+                    <div class="bg-gray-900 p-4 rounded-lg border-l-4 border-green-400">
+                        <div class="text-green-400 text-2xl mb-2">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">MULTIDISPOSITIVOS</h4>
+                        <p class="text-sm">Assista em qualquer lugar: TV, celular, tablet ou computador.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos Section -->
+    <section id="planos" class="py-16 bg-black bg-opacity-70">
+        <div class="container mx-auto px-4">
+            <h2 class="futuristic-font text-3xl md:text-4xl font-bold text-center mb-12 text-cyan-400 glow-text">
+                ESCOLHA SEU <span class="text-purple-400">PLANO</span>
+            </h2>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="urgency-banner rounded-lg mb-8">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> PROMOÇÃO POR TEMPO LIMITADO! PREÇOS ESPECIAIS PARA HOJE!
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Plano 1 -->
+                    <div class="bg-gray-900 rounded-xl p-8 neon-border transform hover:scale-[1.02] transition duration-500 relative">
+                        <div class="absolute top-0 right-0 bg-cyan-600 text-white px-4 py-1 rounded-bl-lg rounded-tr-lg text-sm font-bold">
+                            MAIS POPULAR
+                        </div>
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="futuristic-font text-2xl font-bold text-cyan-400">PLANO BÁSICO</h3>
+                            <span class="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">1 APARELHO</span>
+                        </div>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold text-white">R$ 25,00</span>
+                            <span class="text-gray-400">/mês</span>
+                            <div class="text-sm text-green-400 mt-1">Menos de R$1 por dia!</div>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>+10.000 Canais HD/4K</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>+50.000 Filmes e Séries</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>Zero buffering</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>Suporte 24/7 via WhatsApp</span>
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/5564999984690?text=Olá,%20quero%20assinar%20o%20Plano%20Básico%20da%20WPlay%20IPTV%20por%20R$25,00/mês" class="w-full bg-gradient-to-r from-cyan-600 to-purple-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 hover:opacity-90 glow-box pulse block text-center">
+                            <i class="fas fa-shopping-cart mr-2"></i> COMPRAR AGORA
+                        </a>
+                    </div>
+                    
+                    <!-- Plano 2 -->
+                    <div class="bg-gray-900 rounded-xl p-8 neon-border transform hover:scale-[1.02] transition duration-500 relative">
+                        <div class="absolute top-0 right-0 bg-purple-600 text-white px-4 py-1 rounded-bl-lg rounded-tr-lg text-sm font-bold">
+                            MELHOR CUSTO-BENEFÍCIO
+                        </div>
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="futuristic-font text-2xl font-bold text-purple-400">PLANO PREMIUM</h3>
+                            <span class="bg-cyan-600 text-white text-xs font-bold px-3 py-1 rounded-full">2 APARELHOS</span>
+                        </div>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold text-white">R$ 30,00</span>
+                            <span class="text-gray-400">/mês</span>
+                            <div class="text-sm text-green-400 mt-1">Apenas R$5 a mais por 2 telas!</div>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>+10.000 Canails HD/4K</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>+50.000 Filmes e Séries</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>2 aparelhos simultâneos</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>Prioridade no suporte</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span>Zero buffering garantido</span>
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/5564999984690?text=Olá,%20quero%20assinar%20o%20Plano%20Premium%20da%20WPlay%20IPTV%20por%20R$30,00/mês" class="w-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 hover:opacity-90 glow-box pulse block text-center">
+                            <i class="fas fa-shopping-cart mr-2"></i> COMPRAR AGORA
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <a href="https://wa.me/5564999984690" class="text-cyan-400 hover:text-cyan-300 inline-flex items-center">
+                        <i class="fas fa-question-circle mr-2"></i> Precisa de mais telas? Fale conosco no WhatsApp!
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Novos Conteúdos Section -->
+    <section id="novidades" class="py-16 bg-black bg-opacity-70">
+        <div class="container mx-auto px-4">
+            <h2 class="futuristic-font text-3xl md:text-4xl font-bold text-center mb-12 text-purple-400 glow-text">
+                🎞 <span class="text-cyan-400">NOVOS CONTEÚDOS</span> ADICIONADOS
+            </h2>
+            
+            <div class="content-container">
+                <div class="content-sidebar">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-4">CATEGORIAS</h3>
+                    <div class="flex flex-col space-y-2">
+                        <button class="content-tab active" data-tab="filmes">Filmes Recentes</button>
+                        <button class="content-tab" data-tab="series">Séries Recentes</button>
+                        <button class="content-tab" data-tab="esportes">Canais Esportivos</button>
+                        <button class="content-tab" data-tab="infantil">Infantil</button>
+                        <button class="content-tab" data-tab="documentarios">Documentários</button>
+                    </div>
+                </div>
+                
+                <div class="content-main">
+                    <div id="filmes" class="tab-content active">
+                        <div class="new-content-section">
+                            <h3 class="new-content-title">FILMES RECENTEMENTE ADICIONADOS</h3>
+                            <div class="content-grid">
+                                <div class="content-item">As Tartarugas Ninja Fora das Sombras (2016)</div>
+                                <div class="content-item">Baywatch SOS Malibu (2017)</div>
+                                <div class="content-item">Click (2006)</div>
+                                <div class="content-item">Crepúsculo (2008)</div>
+                                <div class="content-item">Mafia Mamma De Repente Criminosa (2023)</div>
+                                <div class="content-item">Marjaavaan (LEG) (2019)</div>
+                                <div class="content-item">Megiddo (2001)</div>
+                                <div class="content-item">Miss India (LEG) (2020)</div>
+                                <div class="content-item">Não Vamos Pagar Nada (2020)</div>
+                                <div class="content-item">No Balanco do Amor (2001)</div>
+                                <div class="content-item">O Amigo Oculto (2005)</div>
+                                <div class="content-item">O Demolidor (1993)</div>
+                                <div class="content-item">O Homem do Saco (2024)</div>
+                                <div class="content-item">O Macaco (2025)</div>
+                                <div class="content-item">O Preco da Vida (2017)</div>
+                                <div class="content-item">Querida, Encolhi as Criancas (1989)</div>
+                                <div class="content-item">Reine Sobre Mim (2007)</div>
+                                <div class="content-item">Ta Bom Demais (2014)</div>
+                                <div class="content-item">The Rescue (2020)</div>
+                                <div class="content-item">Troia (2004)</div>
+                                <div class="content-item">Um Morto Muito Louco (1989)</div>
+                                <div class="content-item">Uma Boa Mentira (2014)</div>
+                                <div class="content-item">Vizinhos (2014)</div>
+                                <div class="content-item">Vizinhos 2 (2016)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="series" class="tab-content">
+                        <div class="new-content-section">
+                            <h3 class="new-content-title">SÉRIES RECENTEMENTE ADICIONADAS</h3>
+                            <div class="content-grid">
+                                <div class="content-item">A Moreninha (1975)</div>
+                                <div class="content-item">A Promessa (2023)</div>
+                                <div class="content-item">Ascensao Imperio Otomano (2020)</div>
+                                <div class="content-item">Betty a Feia (1999)</div>
+                                <div class="content-item">Classe dos Heróis Fracos (2022)</div>
+                                <div class="content-item">Doce Engano (2023)</div>
+                                <div class="content-item">Dona de Mim (2025)</div>
+                                <div class="content-item">Garota do Momento (2024)</div>
+                                <div class="content-item">Go Go Loser Ranger (2024)</div>
+                                <div class="content-item">O Conto da Aia (2017)</div>
+                                <div class="content-item">O Estudio (2025)</div>
+                                <div class="content-item">Quando Ninguem Nos Ve (2025)</div>
+                                <div class="content-item">Senora Acero (2014)</div>
+                                <div class="content-item">She (LEG) (2020)</div>
+                                <div class="content-item">The Chosen (2024)</div>
+                                <div class="content-item">Uma Família Perfeita (2025)</div>
+                                <div class="content-item">Vale Tudo (2025)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="esportes" class="tab-content">
+                        <div class="new-content-section">
+                            <h3 class="new-content-title">CANAIS ESPORTIVOS</h3>
+                            <div class="content-grid">
+                                <div class="content-item">ESPN</div>
+                                <div class="content-item">ESPN 2</div>
+                                <div class="content-item">ESPN 3</div>
+                                <div class="content-item">ESPN Brasil</div>
+                                <div class="content-item">ESPN Extra</div>
+                                <div class="content-item">Fox Sports</div>
+                                <div class="content-item">Fox Sports 2</div>
+                                <div class="content-item">Band Sports</div>
+                                <div class="content-item">Sport TV</div>
+                                <div class="content-item">Sport TV 2</div>
+                                <div class="content-item">Sport TV 3</div>
+                                <div class="content-item">Premiere 2</div>
+                                <div class="content-item">Premiere 3</div>
+                                <div class="content-item">Premiere 4</div>
+                                <div class="content-item">Premiere 5</div>
+                                <div class="content-item">Premiere 6</div>
+                                <div class="content-item">Premiere 7</div>
+                                <div class="content-item">Combate</div>
+                                <div class="content-item">DAZN</div>
+                                <div class="content-item">NBA TV</div>
+                                <div class="content-item">NFL Network</div>
+                                <div class="content-item">UFC Fight Pass</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="infantil" class="tab-content">
+                        <div class="new-content-section">
+                            <h3 class="new-content-title">CANAIS INFANTIS</h3>
+                            <div class="content-grid">
+                                <div class="content-item">Cartoon Network</div>
+                                <div class="content-item">Disney Channel</div>
+                                <div class="content-item">Disney XD</div>
+                                <div class="content-item">Disney Junior</div>
+                                <div class="content-item">Nickelodeon</div>
+                                <div class="content-item">Nick Jr</div>
+                                <div class="content-item">Boomerang</div>
+                                <div class="content-item">Discovery Kids</div>
+                                <div class="content-item">Nat Geo Kids</div>
+                                <div class="content-item">Gloob</div>
+                                <div class="content-item">Gloobinho</div>
+                                <div class="content-item">Tooncast</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="documentarios" class="tab-content">
+                        <div class="new-content-section">
+                            <h3 class="new-content-title">CANAIS DE DOCUMENTÁRIOS</h3>
+                            <div class="content-grid">
+                                <div class="content-item">Discovery Channel</div>
+                                <div class="content-item">Discovery Turbo</div>
+                                <div class="content-item">Discovery Science</div>
+                                <div class="content-item">Discovery Theater</div>
+                                <div class="content-item">Discovery World</div>
+                                <div class="content-item">Animal Planet</div>
+                                <div class="content-item">Nat Geo</div>
+                                <div class="content-item">Nat Geo Wild</div>
+                                <div class="content-item">History</div>
+                                <div class="content-item">History 2</div>
+                                <div class="content-item">Investigation Discovery</div>
+                                <div class="content-item">A&E</div>
+                                <div class="content-item">H2</div>
+                                <div class="content-item">TLC</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-gray-400 mb-4">Atualizamos nosso catálogo SEMANALMENTE com os lançamentos mais recentes!</p>
+                <p class="text-gray-400">Tem algum filme ou série que gostaria de ver? Nos avise pelo WhatsApp!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dispositivos Compatíveis Section -->
+    <section id="dispositivos" class="py-16 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="futuristic-font text-3xl md:text-4xl font-bold text-center mb-12 text-purple-400 glow-text">
+                ASSISTA EM QUALQUER <span class="text-cyan-400">DISPOSITIVO</span>
+            </h2>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-tv text-4xl text-cyan-400"></i>
+                    </div>
+                    <span class="font-bold">Smart TVs</span>
+                    <p class="text-sm text-gray-400 mt-1">Samsung, LG, Sony, Philips</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-mobile-alt text-4xl text-purple-400"></i>
+                    </div>
+                    <span class="font-bold">Celulares</span>
+                    <p class="text-sm text-gray-400 mt-1">Android e iPhone</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-tablet-alt text-4xl text-green-400"></i>
+                    </div>
+                    <span class="font-bold">Tablets</span>
+                    <p class="text-sm text-gray-400 mt-1">Android e iPad</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-laptop text-4xl text-yellow-400"></i>
+                    </div>
+                    <span class="font-bold">Computadores</span>
+                    <p class="text-sm text-gray-400 mt-1">Windows e Mac</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-gamepad text-4xl text-red-400"></i>
+                    </div>
+                    <span class="font-bold">Video Games</span>
+                    <p class="text-sm text-gray-400 mt-1">Xbox, PlayStation</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <div class="text-4xl text-blue-400">TV</div>
+                    </div>
+                    <span class="font-bold">TV Box</span>
+                    <p class="text-sm text-gray-400 mt-1">Android TV Box, Mi Box</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-sticky-note text-4xl text-pink-400"></i>
+                    </div>
+                    <span class="font-bold">Fire TV Stick</span>
+                    <p class="text-sm text-gray-400 mt-1">Todos os modelos</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-chromecast text-4xl text-orange-400"></i>
+                    </div>
+                    <span class="font-bold">Chromecast</span>
+                    <p class="text-sm text-gray-400 mt-1">Todos os modelos</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-robot text-4xl text-green-500"></i>
+                    </div>
+                    <span class="font-bold">Android TV</span>
+                    <p class="text-sm text-gray-400 mt-1">TVs com sistema Android</p>
+                </div>
+                <div class="device-item text-center">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                        <i class="fas fa-desktop text-4xl text-cyan-300"></i>
+                    </div>
+                    <span class="font-bold">Outros Dispositivos</span>
+                    <p class="text-sm text-gray-400 mt-1">Qualquer navegador</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <p class="text-gray-400 mb-4">Nosso serviço funciona em praticamente TODOS os dispositivos modernos.</p>
+                <p class="text-gray-400">Configuração simples em menos de 5 minutos com nosso suporte especializado.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Canais Section -->
+    <section id="canais" class="py-16 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="futuristic-font text-3xl md:text-4xl font-bold text-center mb-12 text-cyan-400 glow-text">
+                MAIS DE <span class="text-purple-400">10.000 CANAIS</span>
+            </h2>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="channel-icon text-center" onclick="document.getElementById('allChannelsModal').style.display='block'; document.getElementById('filmes-section').scrollIntoView({behavior: 'smooth'});">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-2">
+                        <i class="fas fa-film text-4xl text-red-500"></i>
+                    </div>
+                    <span class="text-sm">Filmes</span>
+                </div>
+                <div class="channel-icon text-center" onclick="document.getElementById('allChannelsModal').style.display='block'; document.getElementById('esportes-section').scrollIntoView({behavior: 'smooth'});">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-2">
+                        <i class="fas fa-futbol text-4xl text-green-500"></i>
+                    </div>
+                    <span class="text-sm">Esportes</span>
+                </div>
+                <div class="channel-icon text-center" onclick="document.getElementById('allChannelsModal').style.display='block'; document.getElementById('musica-section').scrollIntoView({behavior: 'smooth'});">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-2">
+                        <i class="fas fa-music text-4xl text-yellow-500"></i>
+                    </div>
+                    <span class="text-sm">Música</span>
+                </div>
+                <div class="channel-icon text-center" onclick="document.getElementById('allChannelsModal').style.display='block'; document.getElementById('infantil-section').scrollIntoView({behavior: 'smooth'});">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-2">
+                        <i class="fas fa-child text-4xl text-blue-400"></i>
+                    </div>
+                    <span class="text-sm">Infantil</span>
+                </div>
+                <div class="channel-icon text-center" onclick="document.getElementById('allChannelsModal').style.display='block'; document.getElementById('documentarios-section').scrollIntoView({behavior: 'smooth'});">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-2">
+                        <i class="fas fa-globe-americas text-4xl text-purple-500"></i>
+                    </div>
+                    <span class="text-sm">Documentários</span>
+                </div>
+                <div class="channel-icon text-center" onclick="document.getElementById('allChannelsModal').style.display='block'; document.getElementById('noticias-section').scrollIntoView({behavior: 'smooth'});">
+                    <div class="bg-gray-800 rounded-lg p-4 mb-2">
+                        <i class="fas fa-newspaper text-4xl text-orange-500"></i>
+                    </div>
+                    <span class="text-sm">Notícias</span>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button id="showAllChannelsBtn" class="border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">
+                    VER TODOS OS CANAIS
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos Section -->
+    <section class="py-16 bg-black bg-opacity-70">
+        <div class="container mx-auto px-4">
+            <h2 class="futuristic-font text-3xl md:text-4xl font-bold text-center mb-12 text-purple-400 glow-text">
+                O QUE NOSSOS <span class="text-cyan-400">CLIENTES</span> DIZEM
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">"Finalmente cancelei minha TV a cabo! A WPlay tem todos os canais que eu assistia e muito mais, por uma fração do preço. Recomendo demais!"</p>
+                    <div class="font-bold text-cyan-400">- Carlos S., São Paulo</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">"O suporte é incrível! Me ajudaram a configurar na minha TV e no celular em minutos. A qualidade da imagem é perfeita, sem travamentos."</p>
+                    <div class="font-bold text-purple-400">- Ana L., Rio de Janeiro</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">"Economizo mais de R$200 por mês desde que assinei. Tenho todos os canais de esporte que quero e ainda uma biblioteca enorme de filmes."</p>
+                    <div class="font-bold text-green-400">- Roberto M., Minas Gerais</div>
+                </div>
+
+                <!-- Novo depoimento de Goiás -->
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">"Sou fazendeiro em Goiás e aqui o sinal é difícil, mas a WPlay funciona perfeitamente mesmo na região rural. Melhor investimento que fiz!"</p>
+                    <div class="font-bold text-orange-400">- João P., Goiás</div>
+                </div>
+
+                <!-- Novo depoimento 1 -->
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">"Assino há 6 meses e nunca tive problemas. A atualização constante do catálogo de filmes e séries me surpreendeu positivamente!"</p>
+                    <div class="font-bold text-pink-400">- Mariana F., Paraná</div>
+                </div>
+
+                <!-- Novo depoimento 2 -->
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">"Como técnico de informática, sou exigente com qualidade de streaming. A WPlay superou todas minhas expectativas, recomendo para todos meus clientes!"</p>
+                    <div class="font-bold text-blue-400">- Rafael T., Santa Catarina</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Section -->
+    <section id="contato" class="py-16 bg-black bg-opacity-70">
+        <div class="container mx-auto px-4">
+            <h2 class="futuristic-font text-3xl md:text-4xl font-bold text-center mb-12 text-cyan-400 glow-text">
+                PRECISA DE <span class="text-purple-400">AJUDA</span>?
+            </h2>
+            
+            <div class="max-w-2xl mx-auto bg-gray-900 rounded-xl p-8 neon-border text-center">
+                <h3 class="futuristic-font text-2xl font-bold text-purple-400 mb-6">FALE COM NOSSO SUPORTE</h3>
+                
+                <p class="mb-8">Nosso team está disponível 24 horas por dia, 7 dias por semana para tirar suas dúvidas e ajudar na instalação.</p>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-4">
+                    <a href="https://wa.me/5564999984690" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-full transition duration-300 transform hover:scale-105 glow-box">
+                        <i class="fab fa-whatsapp mr-2"></i> WHATSAPP
+                    </a>
+                    <a href="tel:+5564999984690" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-4 px-8 rounded-full transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-phone-alt mr-2"></i> LIGAR AGORA
+                    </a>
+                </div>
+                
+                <div class="mt-8 text-sm text-gray-400">
+                    <p>Resposta em menos de 5 minutos durante o horário comercial</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Garantia Section -->
+    <section class="py-16 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-gray-900 rounded-xl p-8 neon-border">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/3 text-center mb-6 md:mb-0">
+                        <div class="inline-block bg-green-900 bg-opacity-30 p-6 rounded-full">
+                            <i class="fas fa-shield-alt text-5xl text-green-400"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 md:pl-8">
+                        <h3 class="futuristic-font text-2xl font-bold text-cyan-400 mb-4">GARANTIA WPLAY</h3>
+                        <p class="mb-4">Oferecemos garantia de satisfação proporcional aos dias não utilizados do seu plano. Caso não esteja satisfeito, devolveremos o valor correspondente aos dias restantes.</p>
+                        <p>Antes de assinar, você pode testar nosso serviço gratuitamente para ter certeza que atende todas suas expectativas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <i class="fas fa-satellite-dish text-2xl text-cyan-400"></i>
+                    <h2 class="futuristic-font text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+                        WPlay IPTV
+                    </h2>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="https://wa.me/5564999984690" class="text-gray-400 hover:text-green-400 transition duration-300">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300">
+                        <i class="fab fa-telegram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-cyan-400 transition duration-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-6 pt-6 text-center text-gray-500 text-sm">
+                <p>© 2023 WPlay IPTV. Todos os direitos reservados.</p>
+                <p class="mt-2">Este serviço não é afiliado a nenhuma operadora de TV por assinatura.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/5564999984690" class="fixed bottom-6 right-6 bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg transform hover:scale-110 transition duration-300 z-50 pulse">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Floating Buy Button -->
+    <a href="#planos" class="fixed bottom-24 right-6 bg-cyan-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg transform hover:scale-110 transition duration-300 z-50 pulse">
+        <i class="fas fa-shopping-cart"></i>
+    </a>
+
+    <!-- Modal for All Channels -->
+    <div id="allChannelsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 class="futuristic-font text-3xl text-cyan-400 mb-6 text-center">TODOS OS CANAIS E CONTEÚDOS</h2>
+            
+            <div id="filmes-section" class="category-title">CANAIS DE FILMES</div>
+            <div class="channel-list">
+                <div class="channel-item">HBO</div>
+                <div class="channel-item">HBO 2</div>
+                <div class="channel-item">HBO Plus</div>
+                <div class="channel-item">HBO Family</div>
+                <div class="channel-item">HBO Signature</div>
+                <div class="channel-item">Cinemax</div>
+                <div class="channel-item">Fox Premium</div>
+                <div class="channel-item">Fox Premium 2</div>
+                <div class="channel-item">FX</div>
+                <div class="channel-item">Studio Universal</div>
+                <div class="channel-item">Universal TV</div>
+                <div class="channel-item">TNT</div>
+                <div class="channel-item">TNT Series</div>
+                <div class="channel-item">Space</div>
+                <div class="channel-item">AMC</div>
+                <div class="channel-item">Sony</div>
+                <div class="channel-item">Warner Channel</div>
+                <div class="channel-item">Prime Box Brazil</div>
+                <div class="channel-item">Megapix</div>
+                <div class="channel-item">Telecine Premium</div>
+                <div class="channel-item">Telecine Action</div>
+                <div class="channel-item">Telecine Touch</div>
+                <div class="channel-item">Telecine Fun</div>
+                <div class="channel-item">Telecine Pipoca</div>
+                <div class="channel-item">Telecine Cult</div>
+            </div>
+            
+            <div id="esportes-section" class="category-title">CANAIS DE ESPORTES</div>
+            <div class="channel-list">
+                <div class="channel-item">ESPN</div>
+                <div class="channel-item">ESPN 2</div>
+                <div class="channel-item">ESPN 3</div>
+                <div class="channel-item">ESPN Brasil</div>
+                <div class="channel-item">ESPN Extra</div>
+                <div class="channel-item">Fox Sports</div>
+                <div class="channel-item">Fox Sports 2</div>
+                <div class="channel-item">Band Sports</div>
+                <div class="channel-item">Sport TV</div>
+                <div class="channel-item">Sport TV 2</div>
+                <div class="channel-item">Sport TV 3</div>
+                <div class="channel-item">Premiere 2</div>
+                <div class="channel-item">Premiere 3</div>
+                <div class="channel-item">Premiere 4</div>
+                <div class="channel-item">Premiere 5</div>
+                <div class="channel-item">Premiere 6</div>
+                <div class="channel-item">Premiere 7</div>
+                <div class="channel-item">Combate</div>
+                <div class="channel-item">DAZN</div>
+                <div class="channel-item">NBA TV</div>
+                <div class="channel-item">NFL Network</div>
+                <div class="channel-item">UFC Fight Pass</div>
+            </div>
+            
+            <div id="infantil-section" class="category-title">CANAIS INFANTIS</div>
+            <div class="channel-list">
+                <div class="channel-item">Cartoon Network</div>
+                <div class="channel-item">Disney Channel</div>
+                <div class="channel-item">Disney XD</div>
+                <div class="channel-item">Disney Junior</div>
+                <div class="channel-item">Nickelodeon</div>
+                <div class="channel-item">Nick Jr</div>
+                <div class="channel-item">Boomerang</div>
+                <div class="channel-item">Discovery Kids</div>
+                <div class="channel-item">Nat Geo Kids</div>
+                <div class="channel-item">Gloob</div>
+                <div class="channel-item">Gloobinho</div>
+                <div class="channel-item">Tooncast</div>
+            </div>
+            
+            <div id="noticias-section" class="category-title">CANAIS DE NOTÍCIAS</div>
+            <div class="channel-list">
+                <div class="channel-item">GloboNews</div>
+                <div class="channel-item">CNN Brasil</div>
+                <div class="channel-item">CNN International</div>
+                <div class="channel-item">BBC World News</div>
+                <div class="channel-item">Bloomberg</div>
+                <div class="channel-item">France 24</div>
+                <div class="channel-item">DW</div>
+                <div class="channel-item">Al Jazeera</div>
+                <div class="channel-item">NHK World</div>
+                <div class="channel-item">RT</div>
+            </div>
+            
+            <div id="documentarios-section" class="category-title">CANAIS DE DOCUMENTÁRIOS</div>
+            <div class="channel-list">
+                <div class="channel-item">Discovery Channel</div>
+                <div class="channel-item">Discovery Turbo</div>
+                <div class="channel-item">Discovery Science</div>
+                <div class="channel-item">Discovery Theater</div>
+                <div class="channel-item">Discovery World</div>
+                <div class="channel-item">Animal Planet</div>
+                <div class="channel-item">Nat Geo</div>
+                <div class="channel-item">Nat Geo Wild</div>
+                <div class="channel-item">History</div>
+                <div class="channel-item">History 2</div>
+                <div class="channel-item">Investigation Discovery</div>
+                <div class="channel-item">A&E</div>
+                <div class="channel-item">H2</div>
+                <div class="channel-item">TLC</div>
+            </div>
+            
+            <div id="musica-section" class="category-title">CANAIS DE MÚSICA</div>
+            <div class="channel-list">
+                <div class="channel-item">MTV</div>
+                <div class="channel-item">MTV Live</div>
+                <div class="channel-item">VH1</div>
+                <div class="channel-item">VH1 MegaHits</div>
+                <div class="channel-item">VH1 Classic</div>
+                <div class="channel-item">BIS</div>
+                <div class="channel-item">Multishow</div>
+                <div class="channel-item">Music Box Brazil</div>
+                <div class="channel-item">PlayTV</div>
+                <div class="channel-item">Top TV</div>
+                <div class="channel-item">Ideal TV</div>
+            </div>
+            
+            <div class="category-title">CANAIS ABERTOS</div>
+            <div class="channel-list">
+                <div class="channel-item">Globo</div>
+                <div class="channel-item">Record</div>
+                <div class="channel-item">SBT</div>
+                <div class="channel-item">Band</div>
+                <div class="channel-item">RedeTV</div>
+                <div class="channel-item">TV Cultura</div>
+                <div class="channel-item">TV Gazeta</div>
+                <div class="channel-item">TV Aparecida</div>
+                <div class="channel-item">TV Brasil</div>
+            </div>
+            
+            <div class="category-title">CANAIS INTERNACIONAIS</div>
+            <div class="channel-list">
+                <div class="channel-item">BBC One</div>
+                <div class="channel-item">BBC Two</div>
+                <div class="channel-item">ITV</div>
+                <div class="channel-item">Channel 4</div>
+                <div class="channel-item">Sky News UK</div>
+                <div class="channel-item">Fox News</div>
+                <div class="channel-item">MSNBC</div>
+                <div class="channel-item">CNBC</div>
+                <div class="channel-item">ABC</div>
+                <div class="channel-item">CBS</div>
+                <div class="channel-item">NBC</div>
+                <div class="channel-item">PBS</div>
+                <div class="channel-item">The CW</div>
+                <div class="channel-item">Univision</div>
+                <div class="channel-item">Telemundo</div>
+            </div>
+            
+            <div class="category-title">FILMES DISPONÍVEIS</div>
+            <div>
+                <div class="movie-item">
+                    <div class="movie-title">Ação/Aventura</div>
+                    <div>Homem-Aranha: Sem Volta Para Casa, Batman, Duna, Matrix Resurrections, Top Gun: Maverick, Jurassic World: Domínio, The Batman, Uncharted, Shang-Chi, Venom 2</div>
+                </div>
+                <div class="movie-item">
+                    <div class="movie-title">Comédia</div>
+                    <div>Red: Crescer é uma Fera, Minions 2, The Bubble, Não Olhe Para Cima, Free Guy, Licorice Pizza, Marry Me, Dog, The Lost City, Jackass Forever</div>
+                </div>
+                <div class="movie-item">
+                    <div class="movie-title">Drama</div>
+                    <div>O Poderoso Chefão 50 Anos, Belfast, King Richard, CODA, Noite Passada em Soho, Spencer, The French Dispatch
 </html>
